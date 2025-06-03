@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import playButton from "/play_button.svg"
+import pauseButton from "/pause_button.svg"
 import './App.css'
 import Header from "./Components/Header.jsx";
 import PlayButton from "./Components/PlayButton.jsx";
