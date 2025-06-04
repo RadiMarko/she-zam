@@ -6,28 +6,31 @@ import Header from "./Components/Header.jsx";
 import PlayButton from "./Components/PlayButton.jsx";
 
 function App() {
-  const [samples, setSamples] = useState([])
     
+  const [samples, setSamples] = useState([])
+  const [isPlaying, setIsPlaying] = useState(false)
+    
+    
+  // Fetching json music paths (in public)
   useEffect(() => {
       fetch("/music.json")
           .then((res) => res.json())
           .then(setSamples)
   }, [])
     
+  // Function for randomly picking a song and playing it, and also toggling isPlaying state
   function getRandomSong() {
       const randomIndex = Math.floor(Math.random() * samples.length);
       const songToGuess = new Audio(samples[randomIndex].path)
+      songToGuess.play();
+      setIsPlaying(prevIsPlaying => !prevIsPlaying)
       return songToGuess;
   }
-  
-  setTimeout(() => {
-      console.log(getRandomSong())
-  }, 1000)
 
   return (
     <>
       <Header></Header>
-      <PlayButton imageSource={playButton}></PlayButton>
+      <PlayButton imageSource={isPlaying ? pauseButton : playButton} playSong={getRandomSong}></PlayButton>
     </>
   )
 }
